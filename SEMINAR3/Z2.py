@@ -19,44 +19,30 @@ Q, Z – 10 очков.
     Напишите программу, которая вычисляет стоимость введенного пользователем слова.
     Будем считать, что на вход подается только одно слово, которое содержит либо
     только английские, либо только русские буквы.
+
 """
 
-eng = 'A B C D E F G H I J K L M N O P Q R S T U V W X Y'
-scrabble_eng_ = {}
-scrabble_eng_['1'] = '[A, E, I, O, U, L, N, S, T, R ]'
-scrabble_eng_['2'] = '[D, G]'
-scrabble_eng_['3'] = '[B, C, M, P ]'
-scrabble_eng_['4'] = '[F, H, V, W, Y ]'
-scrabble_eng_['5'] = '[K]'
-scrabble_eng_['8'] = '[J, X]'
-scrabble_eng_['10'] = '[Q, Z ]'
+import re
+def isCyrillic(text):
+	return bool(re.search('[а-яА-Я]', text))
 
-rus = 'А Б В Г Д Е Ё Ж З И Й К Л М Н О П Р С Т У Ф Х Ц Ч Ш Щ Ъ Ы Ь Э Ю Я'
-scrabble_rus_ = {}
-scrabble_rus_['1'] = '[А, В, Е, И, Н, О, Р, С, Т ]'
-scrabble_rus_['2'] = '[Д, К, Л, М, П, У ]'
-scrabble_rus_['3'] = '[Б, Г, Ё, Ь, Я]'
-scrabble_rus_['4'] = '[Й, Ы ]'
-scrabble_rus_['5'] = '[Ж, З, Х, Ц, Ч ]'
-scrabble_rus_['8'] = '[Ш, Э, Ю]'
-scrabble_rus_['10'] = '[Ф, Щ, Ъ ]'
+scrabble_eng_ = {1:'[A, E, I, O, U, L, N, S, T, R ]', 2:'[D, G]' , 3:'[B, C, M, P ]' , 4: '[F, H, V, W, Y ]' , 5:'[K]' , 8: '[J, X]' , 10: '[Q, Z ]' }
 
+scrabble_rus_ = {1:'[А, В, Е, И, Н, О, Р, С, Т ]' , 2:'[Д, К, Л, М, П, У ]' , 3:'[Б, Г, Ё, Ь, Я]' , 4: '[Й, Ы ]' , 5: '[Ж, З, Х, Ц, Ч]' , 8: '[Ш, Э, Ю]' , 10: '[Ф, Щ, Ъ]' }
 
-word = input('Введите слово на английском или русском языке: ')
+word  =  input('Введите слово на английском или русском языке: ').upper()
 
-if word.lower() in eng:
-    sum = 0
-    for i in word:
-        for key, value in scrabble_eng_.items():
-            if i.upper() in value:
-              sum += key
-    print(f'Стоимость введенного слова = {sum}')
-
-elif word.lower() in rus:
-    sum = 0
-    for i in word:
-        for key, value in scrabble_rus_.items():
-            if i.upper() in value:
-               sum += key
-    print(f'Стоимость введенного слова = {sum}')
-        
+sum = 0
+if isCyrillic(word):
+	for i in word:
+		for k,v in scrabble_rus_.items():
+			if i in v:
+				sum+=k
+	print(sum)
+else:
+	for i in word:
+		for k,v in scrabble_eng_.items():
+			if i in v:
+				sum+=k
+	print(sum)
+			
